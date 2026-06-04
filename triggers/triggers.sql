@@ -1,0 +1,28 @@
+DELIMITER $$
+
+CREATE TRIGGER trg_rating_check
+BEFORE INSERT ON feedback
+FOR EACH ROW
+BEGIN
+IF NEW.rating < 1 OR NEW.rating > 5 THEN
+SIGNAL SQLSTATE '45000'
+SET MESSAGE_TEXT = 'Invalid rating';
+END IF;
+END$$
+
+DELIMITER ;
+
+DELIMITER $$
+
+CREATE TRIGGER trg_session_time_check
+BEFORE INSERT ON counselling_sess
+FOR EACH ROW
+BEGIN
+IF NEW.scheduled_time < NOW() THEN
+SIGNAL SQLSTATE '45000'
+SET MESSAGE_TEXT = 'Cannot book past session';
+END IF;
+END$$
+
+DELIMITER ;
+
