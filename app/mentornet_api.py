@@ -1,4 +1,26 @@
 import mysql.connector
+from flask import Flask, jsonify
+from flask_cors import CORS
+import mysql.connector
+
+app = Flask(__name__)
+CORS(app)
+
+db = mysql.connector.connect(
+    host="localhost",
+    user="root",
+    password="YOUR_PASSWORD",
+    database="mentornet"
+)
+
+@app.route("/posts")
+def posts():
+    cursor = db.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM post")
+    return jsonify(cursor.fetchall())
+
+app.run(debug=True)
+
 
 db = mysql.connector.connect(
     host="localhost",
