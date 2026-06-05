@@ -333,3 +333,5 @@ export async function getStats() {
   const res = await fetch(`${API}/stats`);
   return res.json();
 }
+
+export { _users as users, _questions as questions, _answers as answers, _communities as communities, _sessions as sessions, _feedbacks as feedbacks };
